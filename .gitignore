@@ -1,0 +1,4 @@
+*.json
+*.ipynb
+.ipynb_checkpoints/
+*.cookie
