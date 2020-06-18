@@ -1,6 +1,7 @@
 import sys
 import json
 import os
+import time
 from configparser import ConfigParser
 from PyPtt import PTT
 from Facebooker import facebook
@@ -46,8 +47,7 @@ if os.path.isfile('posts.json'):
 
 
 
-end_index = start_index + 10
-post_history['latest_post'] = end_index
+end_index = start_index + 1000
 
 for i in range(start_index,end_index):
     print('%d/%d'%(i+1-start_index, end_index-start_index))
@@ -80,8 +80,10 @@ for post in posts:
     fb_post = '%s\n%s\n%s\n原文連結:%s'%(post.title, post.author, post.content, post.web_url)
     print(post.title)
     post_history[post.aid] = post.content
+    post_history['latest_post'] = post.index
     fb.fanpage_post(fb_post, fanpage_id)
     with open('posts.json', 'w') as f:
         json.dump(post_history, f, ensure_ascii=False)
+    time.sleep(60)
 
 
