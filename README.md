@@ -15,9 +15,11 @@ A Facebook bot for Ptt Beauty
 - [ ] [PyPtt](https://github.com/PttCodingMan/PyPtt/)
 
 ## Run
-Put your facebook account, password and PTT account, password into beautyptt.py
+Put your facebook account, password and PTT account, password into config_template.ini
 
-also create your facebook fanpage and put the page id into beautyptt.py
+also create your facebook fanpage and put the fanpage id into config_template.ini
+
+and rename config_template.ini to config.ini
 ```shell
 $ python beautyptt.py
 ```

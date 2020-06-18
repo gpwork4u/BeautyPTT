@@ -1,13 +1,22 @@
 import sys
 import json
 import os
+from configparser import ConfigParser
 from PyPtt import PTT
 from Facebooker import facebook
 ptt_bot = PTT.API()
 fb = facebook.API()
-fb.login('fb_account','fb_password')
+config = ConfigParser()
+config.read('config.ini')
+fb_account = config.get('facebook','account')
+fb_password = config.get('facebook','password')
+fanpage_id = config.get('facebook','fanpage_id')
+ptt_account = config.get('PTT','account')
+ptt_password = config.get('PTT','password')
+
+fb.login(fb_account, fb_password)
 try:
-    ptt_bot.login('ptt_account', 'ptt_password')
+    ptt_bot.login(ptt_account, ptt_password)
 except PTT.exceptions.LoginError:
     ptt_bot.log('登入失敗')
     sys.exit()
@@ -37,7 +46,7 @@ if os.path.isfile('posts.json'):
 
 
 
-end_index = start_index + 1000
+end_index = start_index + 10
 post_history['latest_post'] = end_index
 
 for i in range(start_index,end_index):
@@ -71,7 +80,7 @@ for post in posts:
     fb_post = '%s\n%s\n%s\n原文連結:%s'%(post.title, post.author, post.content, post.web_url)
     print(post.title)
     post_history[post.aid] = post.content
-    fb.fanpage_post(fb_post,'fanpage_id')
+    fb.fanpage_post(fb_post, fanpage_id)
     with open('posts.json', 'w') as f:
         json.dump(post_history, f, ensure_ascii=False)
 
