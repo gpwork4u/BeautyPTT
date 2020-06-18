@@ -5,12 +5,6 @@ A Facebook bot for Ptt Beauty
 - [ ] python 3.6
 
 ## Dependencies
-- [ ] lxml
-- [ ] requests
-- [ ] bs4
-- [ ] progressbar2
-- [ ] websockets
-- [ ] uao
 - [ ] [Facebooker](https://github.com/gpwork4u/Facebooker)
 - [ ] [PyPtt](https://github.com/PttCodingMan/PyPtt/)
 
