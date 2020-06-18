@@ -1,5 +1,6 @@
 *.json
 *.ipynb
-.ipynb_checkpoints/
 *.cookie
+.ipynb_checkpoints/
+.vscode/
 config.ini
