@@ -91,7 +91,7 @@ for post in posts:
               '標題:%s\n'%post.title + \
               '作者:%s\n'%post.author + \
               post.content
-    match = re.search('http(s|)://i.imgur.com/(.+/|)[a-zA-Z0-9]+(\.jpg|)', post.content)
+    match = re.search('http(s|)://(i\.|)imgur.com/(.+/|)[a-zA-Z0-9]+(\.jpg|)', post.content)
     print(post.title)
     if match:
         img_url = match.group(0)
