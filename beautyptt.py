@@ -73,17 +73,25 @@ for i in range(start_index,end_index):
 for post in posts:
     if post.aid in post_history:
         continue
-    post = ptt_bot.get_post(
-                    Beauty_board,
-                    post_aid=post.aid,
-                )
-    fb_post = '%s\n%s\n%s\n原文連結:%s'%(post.title, post.author, post.content, post.web_url)
+    try:
+        post = ptt_bot.get_post(
+                        Beauty_board,
+                        post_aid=post.aid,
+                    )
+    except Exception:
+        ptt_bot.login(ptt_account, ptt_password)
+        post = ptt_bot.get_post(
+                        Beauty_board,
+                        post_aid=post.aid,
+                    )
+
+    fb_post = '原文連結:%s\n%s\n%s\n%s'%(post.web_url, post.title, post.author, post.content)
     print(post.title)
     post_history[post.aid] = post.content
     post_history['latest_post'] = post.index
     fb.fanpage_post(fb_post, fanpage_id)
     with open('posts.json', 'w') as f:
         json.dump(post_history, f, ensure_ascii=False)
-    time.sleep(60)
+    time.sleep(600)
 
 
