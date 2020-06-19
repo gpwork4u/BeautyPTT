@@ -5,9 +5,9 @@ A Facebook bot for Ptt Beauty
 - [ ] python 3.6
 
 ## Dependencies
-- [ ] [Facebooker](https://github.com/gpwork4u/Facebooker)
+- [ ] [Facebooker >= 0.4.0](https://github.com/gpwork4u/Facebooker)
 - [ ] [PyPtt](https://github.com/PttCodingMan/PyPtt/)
-
+- [ ] requests
 ## Run
 Put your facebook account, password and PTT account, password into config_template.ini
 
