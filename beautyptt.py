@@ -2,6 +2,9 @@ import sys
 import json
 import os
 import time
+import re
+import requests
+from io import BytesIO
 from configparser import ConfigParser
 from PyPtt import PTT
 from Facebooker import facebook
@@ -84,12 +87,23 @@ for post in posts:
                         Beauty_board,
                         post_aid=post.aid,
                     )
-
     fb_post = '原文連結:%s\n%s\n%s\n%s'%(post.web_url, post.title, post.author, post.content)
+    match = re.search('http(s|)://i.imgur.com/(.+/|)[a-zA-Z0-9]+(\.jpg|)', post.content)
     print(post.title)
-    post_history[post.aid] = post.content
-    post_history['latest_post'] = post.index
-    fb.fanpage_post(fb_post, fanpage_id)
+    if match:
+        img_url = match.group(0)
+        if img_url.find('.jpg') < 0:
+            img_url += '.jpg'
+        print('match image:%s'%img_url)
+
+        response = requests.get(img_url)
+        if response.status_code == 200:
+            image = BytesIO(response.content)
+            fb.fanpage_post_photo(fb_post, image, fanpage_id)
+    else:
+        post_history[post.aid] = post.content
+        post_history['latest_post'] = post.index
+        fb.fanpage_post(fb_post, fanpage_id)
     with open('posts.json', 'w') as f:
         json.dump(post_history, f, ensure_ascii=False)
     time.sleep(600)
