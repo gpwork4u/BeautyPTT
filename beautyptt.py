@@ -8,7 +8,7 @@ from io import BytesIO
 from configparser import ConfigParser
 from PyPtt import PTT
 from Facebooker import facebook
-ptt_bot = PTT.API()
+ptt_bot = PTT.API(log_level=PTT.log.level.SILENT)
 fb = facebook.API()
 config = ConfigParser()
 config.read('config.ini')
