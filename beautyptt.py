@@ -87,7 +87,10 @@ for post in posts:
                         Beauty_board,
                         post_aid=post.aid,
                     )
-    fb_post = '原文連結:%s\n%s\n%s\n%s'%(post.web_url, post.title, post.author, post.content)
+    fb_post = '原文連結:%s\n'%post.web_url + \
+              '標題:%s\n'%post.title + \
+              '作者:%s\n'%post.author + \
+              post.content
     match = re.search('http(s|)://i.imgur.com/(.+/|)[a-zA-Z0-9]+(\.jpg|)', post.content)
     print(post.title)
     if match:
@@ -101,9 +104,9 @@ for post in posts:
             image = BytesIO(response.content)
             fb.fanpage_post_photo(fb_post, image, fanpage_id)
     else:
-        post_history[post.aid] = post.content
-        post_history['latest_post'] = post.index
         fb.fanpage_post(fb_post, fanpage_id)
+    post_history[post.aid] = post.content
+    post_history['latest_post'] = post.index
     with open('posts.json', 'w') as f:
         json.dump(post_history, f, ensure_ascii=False)
     time.sleep(600)
